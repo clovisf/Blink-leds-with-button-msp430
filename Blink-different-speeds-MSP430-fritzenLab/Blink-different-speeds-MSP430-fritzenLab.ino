@@ -30,6 +30,7 @@ blog post
 // set pin numbers:
 const int ledPin =  GREEN_LED;      // the number of the LED pin
 const int ledPin2 =  RED_LED;
+const int buttonPin = PUSH2; 
 
 // Variables will change:
 int ledState = LOW;             // ledState used to set the LED
@@ -38,11 +39,13 @@ long previousMillis = 0;        // will store last time LED was updated
 // the follow variables is a long because the time, measured in miliseconds,
 // will quickly become a bigger number than can be stored in an int.
 long interval = 1000;           // interval at which to blink (milliseconds)
+int buttonState = 0;         // variable for reading the pushbutton status
 
 void setup() {
   // set the digital pin as output:
   pinMode(ledPin, OUTPUT);      
   pinMode(ledPin2, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void loop()
@@ -67,6 +70,18 @@ void loop()
 
     // set the LED with the ledState of the variable:
     digitalWrite(ledPin, ledState);
+    digitalWrite(ledPin2, !ledState);
+  }
+  
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {
+    interval= 300;
+  } else {
+    interval = 100;
   }
 }
 
